@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Mine\AppStore\Command;
 
+use Hyperf\Codec\Json;
 use Hyperf\Command\Annotation\Command;
 use Hyperf\Stringable\Str;
 use Mine\AppStore\Enums\PluginTypeEnum;
@@ -73,7 +74,7 @@ class CreateCommand extends AbstractCommand
             ],
         ];
         if ($pluginType === PluginTypeEnum::Backend || $pluginType === PluginTypeEnum::Mix) {
-            $namespace = 'Plugin\\' . Str::studly($name);
+            $namespace = 'Plugin\\' . ucwords(str_replace('/', '\\', Str::studly($name)));
 
             $this->createInstallScript($namespace, $path);
             $this->createUninstallScript($namespace, $path);
@@ -82,7 +83,7 @@ class CreateCommand extends AbstractCommand
             $output->composer = [
                 'require' => [],
                 'psr-4' => [
-                    $namespace . '\\' => 'src',
+                    '\\' . $namespace . '\\' => 'src',
                 ],
                 'installScript' => $namespace . '\InstallScript',
                 'uninstallScript' => $namespace . '\UninstallScript',
@@ -96,8 +97,7 @@ class CreateCommand extends AbstractCommand
                 ],
             ];
         }
-
-        $output = json_encode($output, \JSON_THROW_ON_ERROR | \JSON_PRETTY_PRINT | \JSON_UNESCAPED_UNICODE, 512);
+        $output = Json::encode($output);
         file_put_contents($path . '/mine.json', $output);
         $this->output->success(\sprintf('%s 创建成功', $path . '/mine.json'));
     }
