@@ -69,8 +69,10 @@ class CreateCommand extends AbstractCommand
 
     public function createMineJson(string $path, string $name, PluginTypeEnum $pluginType): void
     {
+        $pluginPath = Str::replace(Plugin::PLUGIN_PATH . '/', '', $path);
+
         $output = new \stdClass();
-        $output->name = $name;
+        $output->name = $pluginPath ?? $name;
         $output->version = '1.0.0';
         $output->type = $pluginType->value;
         $output->description = $this->input->getOption('description') ?: 'This is a sample plugin';
