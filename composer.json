@@ -101,10 +101,6 @@
         "analyse": "phpstan analyse --memory-limit 1000M -l 0 -c phpstan.neon ./src",
         "coverage": "pest --coverage --coverage-clover tests/coverage.xml",
         "cs-fix": "php-cs-fixer fix $1",
-        "json-fix": [
-            "@composer normalize --no-update-lock",
-            "find ./src -name composer.json -exec composer normalize --no-update-lock {} \\;"
-        ],
         "test": "pest"
     },
     "extra": {
