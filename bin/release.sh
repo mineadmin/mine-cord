@@ -40,8 +40,12 @@ do
 
         git clone $REMOTE_URL .
         git checkout "$CURRENT_BRANCH";
-
-        if [[ $(git log --pretty="%d" -n 1 | grep tag --count) -eq 0 ]]; then
+        # 判断 tag 是否存在
+        if git rev-parse $VERSION >/dev/null 2>&1
+        then
+            echo "Tag $VERSION already exists"
+        else
+            echo "Tag $VERSION not exists"
             echo "Releasing $REMOTE"
             git tag $VERSION
             git push origin --tags
