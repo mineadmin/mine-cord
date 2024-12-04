@@ -31,6 +31,7 @@ abstract class AbstractJwt implements JwtInterface
         private readonly array $config,
         private readonly CacheManager $cacheManager,
         private readonly Clock $clock,
+        private readonly AccessTokenConstraint $accessTokenConstraint,
         private readonly RefreshTokenConstraint $refreshTokenConstraint
     ) {}
 
@@ -72,7 +73,8 @@ abstract class AbstractJwt implements JwtInterface
                     $this->clock,
                     $this->clock->now()->diff($this->getRefreshExpireAt($this->clock->now()))
                 ),
-                $this->getBlackListConstraint()
+                $this->getBlackListConstraint(),
+                $this->accessTokenConstraint
             );
     }
 
