@@ -21,7 +21,14 @@ final class Filesystem
             if ($file === '.' || $file === '..') {
                 continue;
             }
-            \Nette\Utils\FileSystem::copy($source . '/' . $file, $target . '/' . $file);
+
+            $sourcePath = $source . '/' . $file;
+            $targetPath = $target . '/' . $file;
+            if (is_dir($sourcePath)) {
+                self::copy($sourcePath, $targetPath, $deleteSource);
+            } else {
+                \Nette\Utils\FileSystem::copy($sourcePath, $targetPath);
+            }
         }
         if ($deleteSource) {
             \Nette\Utils\FileSystem::delete($source);
