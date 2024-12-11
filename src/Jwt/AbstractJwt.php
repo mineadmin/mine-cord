@@ -98,7 +98,7 @@ abstract class AbstractJwt implements JwtInterface
 
     public function addBlackList(UnencryptedToken $token): bool
     {
-        return $this->getCacheDriver()->set($token->toString(), $this->getBlackConfig('ttl', 600));
+        return $this->getCacheDriver()->set($token->toString(), 1, $this->getBlackConfig('ttl', 600));
     }
 
     public function hasBlackList(UnencryptedToken $token): bool
