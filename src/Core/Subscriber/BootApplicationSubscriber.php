@@ -44,10 +44,10 @@ final class BootApplicationSubscriber implements ListenerInterface
         }
         if ($event instanceof AfterExecute) {
             $command = $event->getCommand();
-            if ($command instanceof GenMigrateCommand) {
+            if ($command instanceof GenMigrateCommand && is_dir(BASE_PATH . '/migrations')) {
                 Filesystem::copy(BASE_PATH . '/migrations', BASE_PATH . '/databases/migrations');
             }
-            if ($command instanceof GenSeederCommand) {
+            if ($command instanceof GenSeederCommand && is_dir(BASE_PATH . '/seeders')) {
                 Filesystem::copy(BASE_PATH . '/seeders', BASE_PATH . '/databases/seeders');
             }
         }
