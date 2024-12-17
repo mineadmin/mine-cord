@@ -37,8 +37,8 @@ final class Factory
             return $this->config->get($this->getConfigKey());
         }
         return Arr::merge(
-            $this->config->get($this->getConfigKey($scene)),
-            $this->config->get($this->getConfigKey())
+            $this->config->get($this->getConfigKey()),
+            $this->config->get($this->getConfigKey($scene))
         );
     }
 

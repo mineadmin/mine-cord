@@ -63,7 +63,7 @@ class CreateCommand extends AbstractCommand
     public function createNamespace(string $path, string $name): string
     {
         $pluginPath = Str::replace(Plugin::PLUGIN_PATH . '/', '', $path);
-        list($orgName) = explode('/', $pluginPath);
+        [$orgName] = explode('/', $pluginPath);
         return 'Plugin\\' . Str::studly($orgName) . '\\' . Str::studly($name);
     }
 

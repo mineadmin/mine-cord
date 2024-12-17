@@ -31,6 +31,7 @@ abstract class AbstractJwt implements JwtInterface
         private readonly array $config,
         private readonly CacheManager $cacheManager,
         private readonly Clock $clock,
+        private readonly AccessTokenConstraint $accessTokenConstraint,
         private readonly RefreshTokenConstraint $refreshTokenConstraint
     ) {}
 
@@ -72,7 +73,8 @@ abstract class AbstractJwt implements JwtInterface
                     $this->clock,
                     $this->clock->now()->diff($this->getRefreshExpireAt($this->clock->now()))
                 ),
-                $this->getBlackListConstraint()
+                $this->getBlackListConstraint(),
+                $this->accessTokenConstraint
             );
     }
 
@@ -96,7 +98,7 @@ abstract class AbstractJwt implements JwtInterface
 
     public function addBlackList(UnencryptedToken $token): bool
     {
-        return $this->getCacheDriver()->set($token->toString(), $this->getBlackConfig('ttl', 600));
+        return $this->getCacheDriver()->set($token->toString(), 1, $this->getBlackConfig('ttl', 600));
     }
 
     public function hasBlackList(UnencryptedToken $token): bool
