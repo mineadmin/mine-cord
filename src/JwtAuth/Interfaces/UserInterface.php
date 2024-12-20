@@ -12,9 +12,6 @@ declare(strict_types=1);
 
 namespace Mine\JwtAuth\Interfaces;
 
-use Hyperf\Collection\Collection;
-use Hyperf\Database\Model\Events\Creating;
-use Hyperf\Database\Model\Events\Deleted;
 use Hyperf\Database\Model\Relations\BelongsToMany;
 
 interface UserInterface
