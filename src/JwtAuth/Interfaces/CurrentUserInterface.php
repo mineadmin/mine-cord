@@ -23,8 +23,4 @@ interface CurrentUserInterface
     public function id(): int;
 
     public function isSuperAdmin(): bool;
-
-    public function filterCurrentUser(?array $menuTreeList = null, ?array $permissions = null): array;
-
-    public function globalMenuTreeList(): Collection;
 }

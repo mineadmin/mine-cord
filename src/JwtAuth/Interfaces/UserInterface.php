@@ -21,21 +21,9 @@ interface UserInterface
 {
     public function roles(): BelongsToMany;
 
-    public function deleted(Deleted $event);
-
-    public function setPasswordAttribute($value): void;
-
-    public function creating(Creating $event);
-
     public function verifyPassword(string $password): bool;
 
     public function resetPassword(): void;
 
     public function isSuperAdmin(): bool;
-
-    public function getRoles(array $fields): Collection;
-
-    public function getPermissions(): Collection;
-
-    public function hasPermission(string $permission): bool;
 }
