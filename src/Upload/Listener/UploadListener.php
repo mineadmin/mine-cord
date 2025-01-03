@@ -57,6 +57,7 @@ abstract class UploadListener implements ListenerInterface
                 $fileInfo->getSize(),
                 $this->filesystem->publicUrl($path . '/' . $filename)
             ));
+            @unlink($fileInfo->getRealPath());
         }
     }
 
