@@ -18,7 +18,10 @@
   "autoload": {
     "psr-4": {
       "Mine\\Support\\": "./"
-    }
+    },
+    "files": [
+      "./functions.php"
+    ]
   },
   "require": {
     "ext-fileinfo": "*",
