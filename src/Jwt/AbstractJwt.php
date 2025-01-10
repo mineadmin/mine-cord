@@ -35,26 +35,32 @@ abstract class AbstractJwt implements JwtInterface
         private readonly RefreshTokenConstraint $refreshTokenConstraint
     ) {}
 
-    public function builderRefreshToken(string $sub): UnencryptedToken
+    public function builderRefreshToken(string $sub, ?\Closure $callable = null): UnencryptedToken
     {
         return $this->getJwtFacade()->issue(
             $this->getSigner(),
             $this->getSigningKey(),
-            function (Builder $builder, \DateTimeImmutable $immutable) use ($sub) {
+            function (Builder $builder, \DateTimeImmutable $immutable) use ($sub, $callable) {
                 $builder = $builder->identifiedBy($sub);
                 $builder = $builder->expiresAt($this->getRefreshExpireAt($immutable));
+                if ($callable !== null) {
+                    $builder = $callable($builder);
+                }
                 return $builder->relatedTo('refresh');
             }
         );
     }
 
-    public function builderAccessToken(string $sub): UnencryptedToken
+    public function builderAccessToken(string $sub, ?\Closure $callable = null): UnencryptedToken
     {
         return $this->getJwtFacade()->issue(
             $this->getSigner(),
             $this->getSigningKey(),
-            function (Builder $builder, \DateTimeImmutable $immutable) use ($sub) {
+            function (Builder $builder, \DateTimeImmutable $immutable) use ($sub, $callable) {
                 $builder = $builder->identifiedBy($sub);
+                if ($callable !== null) {
+                    $builder = $callable($builder);
+                }
                 return $builder->expiresAt($this->getExpireAt($immutable));
             }
         );
