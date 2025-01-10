@@ -16,9 +16,9 @@ use Lcobucci\JWT\UnencryptedToken;
 
 interface JwtInterface
 {
-    public function builderAccessToken(string $sub): UnencryptedToken;
+    public function builderAccessToken(string $sub, ?\Closure $callable = null): UnencryptedToken;
 
-    public function builderRefreshToken(string $sub): UnencryptedToken;
+    public function builderRefreshToken(string $sub, ?\Closure $callable = null): UnencryptedToken;
 
     public function parserAccessToken(string $accessToken): UnencryptedToken;
 
